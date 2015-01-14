@@ -1,0 +1,11 @@
+Steel
+Cristal
+Wooden
+Obsidian
+Iron
+Silver
+Gold
+Platinium
+Ebonite
+Diamond
+Jade

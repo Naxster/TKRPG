@@ -1,0 +1,6 @@
+Axe
+Sword
+Saber
+Broadsword
+Cutlass
+Skewer

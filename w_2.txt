@@ -1,0 +1,8 @@
+Steel
+Cristal
+Wooden
+Obsidian
+Iron
+Silver
+Titanium
+Diamond

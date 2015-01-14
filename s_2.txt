@@ -1,0 +1,7 @@
+Steel
+Wooden
+Stone
+Gold
+Silver
+Leather
+Fur
