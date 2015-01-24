@@ -6,6 +6,7 @@ public abstract class Player implements Character {
     protected int strenght;    //sila (dmg + hp)
     protected int dexterity;    //zrecznosc (def + crit)
     protected int magic_skill;        //umiejetnosci magiczne (mdmg + mp)
+    protected String playerName;
 
     protected int hp;    //zycie
     protected int ex_hp;
@@ -365,7 +366,7 @@ public abstract class Player implements Character {
 
     public void identify() {
         int data;
-
+        System.out.println("Name: \t\t\t" + playerName + "\n");
         data = strenght;
         System.out.println("Strenght: \t\t" + data);
         data = dexterity;

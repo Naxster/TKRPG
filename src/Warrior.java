@@ -8,6 +8,7 @@ public class Warrior extends Player {
         strenght = choice.strenght; //dmg = 5*3; hp = 5*40;
         dexterity = choice.dexterity;    //def = 9*3; crt = 3*3
         magic_skill = choice.magic; //mdmg = 2*3; mp = 2*30
+        playerName = choice.name;
         choice.dispose();
 
         hp = 40 * strenght;

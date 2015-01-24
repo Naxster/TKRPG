@@ -11,6 +11,7 @@ public class InitStatsWindow extends JDialog {
     public int strenght;
     public int dexterity;
     public int magic;
+    public String name;
     private int all;
 
     public JTextField StrField;
@@ -18,17 +19,37 @@ public class InitStatsWindow extends JDialog {
     public JTextField MgcField;
     public JTextField HeadField;
 
+    public JTextField nameField;
+
     public InitStatsWindow() {
         finished = false;
         strenght = 0;
         dexterity = 0;
         magic = 0;
+        name = "ChuckNorris";
         all = 10;
         this.setTitle("Stats Window");
-        setPreferredSize(new Dimension(300, 250));
+        setPreferredSize(new Dimension(310, 350));
         this.setResizable(false);
         setLayout(new FlowLayout());
         setModal(true);
+
+        JLayeredPane namePane = new JLayeredPane();
+        namePane.setPreferredSize(new Dimension(300, 60));
+        namePane.setLayout(new FlowLayout());
+        namePane.setBorder(BorderFactory.createTitledBorder("Choose Name"));
+
+        nameField = new JTextField("ChuckNorris",12);
+        JLabel label = new JLabel("Character name:");
+        label.setPreferredSize(new Dimension(120, 40));
+        namePane.add(label,BorderLayout.WEST);
+        namePane.add(nameField,BorderLayout.EAST);
+        add(namePane);
+
+        JLayeredPane stats = new JLayeredPane();
+        stats.setPreferredSize(new Dimension(300, 200));
+        stats.setLayout(new FlowLayout());
+        stats.setBorder(BorderFactory.createTitledBorder("Set Statistics"));
 
         HeadField = new JTextField("Points to spent: 10",20);
         HeadField.setEditable(false);
@@ -119,18 +140,19 @@ public class InitStatsWindow extends JDialog {
             }
         });
 
-        ConfirmButton.setPreferredSize(new Dimension(100, 50));
+        ConfirmButton.setPreferredSize(new Dimension(100, 35));
         ConfirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if((strenght + dexterity + magic) == 10) {
+                    name = nameField.getText();
                     finished = true;
                     setVisible(false);
                 }
             }
         });
 
-        add(HeadField);
+        stats.add(HeadField);
         JPanel StrPanel = new JPanel();
         StrPanel.setPreferredSize(new Dimension(300, 40));
         StrPanel.add(StrField, BorderLayout.WEST);
@@ -138,7 +160,7 @@ public class InitStatsWindow extends JDialog {
         Buttons1.add(AddStrButton, BorderLayout.WEST);
         Buttons1.add(RemStrButton, BorderLayout.EAST);
         StrPanel.add(Buttons1,BorderLayout.EAST);
-        add(StrPanel);
+        stats.add(StrPanel);
 
         JPanel DexPanel = new JPanel();
         DexPanel.setPreferredSize(new Dimension(300, 40));
@@ -147,7 +169,7 @@ public class InitStatsWindow extends JDialog {
         Buttons2.add(AddDexButton, BorderLayout.WEST);
         Buttons2.add(RemDexButton, BorderLayout.EAST);
         DexPanel.add(Buttons2,BorderLayout.EAST);
-        add(DexPanel);
+        stats.add(DexPanel);
 
         JPanel MgcPanel = new JPanel();
         MgcPanel.setPreferredSize(new Dimension(300, 40));
@@ -155,8 +177,10 @@ public class InitStatsWindow extends JDialog {
         JPanel Buttons3 = new JPanel();
         Buttons3.add(AddMgcButton, BorderLayout.WEST);
         Buttons3.add(RemMgcButton, BorderLayout.EAST);
-        MgcPanel.add(Buttons3,BorderLayout.EAST);
-        add(MgcPanel);
+        MgcPanel.add(Buttons3, BorderLayout.EAST);
+        stats.add(MgcPanel);
+
+        add(stats);
 
         add(ConfirmButton,BorderLayout.SOUTH);
 
