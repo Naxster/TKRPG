@@ -28,7 +28,7 @@ public class InitStatsWindow extends JDialog {
         magic = 0;
         name = "ChuckNorris";
         all = 10;
-        this.setTitle("Stats Window");
+        this.setTitle("Set Stats");
         setPreferredSize(new Dimension(310, 350));
         this.setResizable(false);
         setLayout(new FlowLayout());

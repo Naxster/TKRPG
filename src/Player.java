@@ -268,7 +268,6 @@ public abstract class Player implements Character {
      * funkcja dodajaca doswiadczenie
      * do: zmiany wartosci po walce, obsluga inicjacji zmiany poziomu
      *
-     * @param z - warotsc zmiany
      */
     public void levelup() {
         Scanner sc = new Scanner(System.in);
@@ -365,46 +364,29 @@ public abstract class Player implements Character {
     }
 
     public void identify() {
-        int data;
-        System.out.println("Name: \t\t\t" + playerName + "\n");
-        data = strenght;
-        System.out.println("Strenght: \t\t" + data);
-        data = dexterity;
-        System.out.println("Dexterity: \t\t" + data);
-        data = magic_skill;
-        System.out.println("Magic: \t\t\t" + data);
-        data = hp;
-        System.out.println("Health: \t\t" + data);
-        data = mana;
-        System.out.println("Mana: \t\t\t" + data);
-        data = dmg;
-        System.out.println("Damage: \t\t" + data);
-        data = mdmg;
-        System.out.println("Magical damage: \t" + data);
-        data = def;
-        System.out.println("Defence: \t\t" + data);
-        data = crit;
-        System.out.println("Chance for critical: \t" + data);
-        System.out.println("ADDITIONAL:");
-        data = ex_hp;
-        System.out.println("Add Health: \t\t" + data);
-        data = ex_mana;
-        System.out.println("Add Mana: \t\t" + data);
-        data = ex_dmg;
-        System.out.println("Add Damage: \t\t" + data);
-        data = ex_mdmg;
-        System.out.println("Add Magical damage: \t" + data);
-        data = ex_def;
-        System.out.println("Add Defence: \t\t" + data);
-        data = ex_crit;
-        System.out.println("Add Chn for critical: \t" + data);
-        data = lvl;
-        System.out.println("\nLevel: \t" + data);
-        data = exp;
-        System.out.println("Experiance: \t" + data);
-        data = exp_nxt;
-        System.out.println("Experiance to next level: \t" + data);
-        System.out.println("Gold: \t" + gold);
+
+        String head = playerName + ", lvl." + lvl;
+        String text = "";
+
+        text += "Strenght: \t\t" + strenght + "\n";
+        text += "Dexterity: \t\t" + dexterity + "\n";
+        text += "Magic: \t\t" + magic_skill + "\n\n";
+        text += "Health: \t\t" + hp + "\n";
+        text += "Mana: \t\t" + mana + "\n\n";
+        text += "Damage: \t\t" + dmg + "\n";
+        text += "Magical damage: \t" + mdmg + "\n";
+        text += "Defence: \t\t" + def + "\n";
+        text += "Chance for critical: \t" + crit + "\n\n";
+        text += "ADDITIONAL:" + "\n";
+        text += "Additional Health: \t" + ex_hp + "\n";
+        text += "Additional Mana: \t" + ex_mana + "\n";
+        text += "Additional Damage: \t" + ex_dmg + "\n";
+        text += "Additional Magical damage: \t" + ex_mdmg + "\n";
+        text += "Additional Defence: \t" + ex_def + "\n";
+        text += "Additional chance for Critical: \t" + ex_crit + "\n";
+
+        StatsWindow window = new StatsWindow(gold, exp, exp_nxt, head, text);
+        window.dispose();
     }
 
     public Name getNames() {
