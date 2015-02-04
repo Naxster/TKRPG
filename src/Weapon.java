@@ -66,7 +66,7 @@ public class Weapon extends Thing {
     public String addition() {
         int a = spec.length();
         if (a > 2) {
-            String res = "(+ " + atc_s + " " + spec + ")";
+            String res = "Additional: \t+" + atc_s + " " + spec;
             return res;
         }
         return " ";
@@ -75,6 +75,13 @@ public class Weapon extends Thing {
     public String show() {
         String sp = addition();
         String res = name + " " + sp + " \t" + atc_l + "-" + atc_u + "\t requires: " + require + " strength";
+        return res;
+    }
+
+
+    public String showDetails() {
+        String sp = addition();
+        String res = sp + " \nATTACK: \t" + atc_l + " - " + atc_u + "\n Requires: \t" + require + " strength";
         return res;
     }
 

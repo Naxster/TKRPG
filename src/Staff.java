@@ -61,6 +61,10 @@ public class Staff extends Thing {
         return res;
     }
 
+    public String showDetails() {
+        return "";
+    }
+
     public ThingType id() {
         return ThingType.STAFF;
     }

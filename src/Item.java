@@ -11,6 +11,10 @@ public class Item extends Thing {
         return res;
     }
 
+    public String showDetails() {
+        return "";
+    }
+
     public ThingType id() {
         return ThingType.ITEM;
     }

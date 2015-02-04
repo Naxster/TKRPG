@@ -30,7 +30,10 @@ public class Mage extends Player {
         lvl = 1;
         spell_book = new Book(2);
         this.names = names;
-        equip = new Equipment(this, 1);
+        if(playerName == "GandalfWhite")
+            equip = new Equipment(this, 2);
+        else
+            equip = new Equipment(this, 1);
 
         x = 14;
         y = 1;

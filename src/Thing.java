@@ -6,6 +6,8 @@ public abstract class Thing {
 
     public abstract String show();
 
+    public abstract String showDetails();
+
     public abstract ThingType id();
 
     public abstract void remove_from(Player z);

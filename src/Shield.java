@@ -52,6 +52,10 @@ public class Shield extends Thing {
         return res;
     }
 
+    public String showDetails() {
+        return "";
+    }
+
     public ThingType id() {
         return ThingType.SHIELD;
     }

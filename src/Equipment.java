@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Equipment {
 
     private Thing[] things;
-    private Player gracz;
+    public Player gracz;
     public int claw;
     public int ebon;
     public int dust;
@@ -29,12 +29,19 @@ public class Equipment {
             gracz.shield = null;
             gracz.amulet = new Amulet(0, 0, gracz.getNames());
         }
+        if(n == 2)
+        {
+            gracz.weapon = new Weapon(1, 4, gracz.getNames());    //przy konstruktorze dla itemu dal "0" da bazowy predefiniowany startowy zestaw
+            gracz.shield = new Shield(1, 4, gracz.getNames());
+            gracz.amulet = new Amulet(0, 4, gracz.getNames());
+        }
     }
 
     /**
      * funkcja wyswietlajaca ekwipunek
      */
     public void show() {
+        EquipmentWindow wind = new EquipmentWindow(this);
         String info = "";
         int i;
 
@@ -203,5 +210,9 @@ public class Equipment {
             else
                 System.out.println("Wrong number Idjit!");
         }
+    }
+
+    public int getPlayerGold(){
+        return gracz.gold;
     }
 }

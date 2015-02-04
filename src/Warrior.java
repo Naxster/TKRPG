@@ -30,7 +30,10 @@ public class Warrior extends Player {
         lvl = 1;
         spell_book = new Book(1);
         this.names = names;
-        equip = new Equipment(this, 0);
+        if(playerName.equals("Kirito"))
+            equip = new Equipment(this,2);
+        else
+            equip = new Equipment(this, 0);
 
 
         x = 14; //14
