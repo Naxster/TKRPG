@@ -65,7 +65,8 @@ public class Amulet extends Thing {
     }
 
     public String showDetails() {
-        return "";
+        String res = "Health: +" + ex_hp + "\nMana: +" + ex_mana + "\nDamage: +" + ex_dmg + "\nMagical Damage: +" + ex_mdmg + "\nDefence: +" + ex_def + "\nCritical: +" + ex_crit + "\n\nRequires: " + require + " magic";
+        return res;
     }
 
     public ThingType id() {

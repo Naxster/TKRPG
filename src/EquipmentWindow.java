@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Created by Naxster on 2015-01-28.
@@ -10,45 +12,96 @@ public class EquipmentWindow extends JDialog {
 
     private Equipment equip;
     public JDesktopPane jdpDesktop;
+    private ChangeButtonListener listener;
+    private JLayeredPane mainPane;
+    private JLayeredPane backpackPane;
+    private JPanel InfoClosePanel;
 
     public EquipmentWindow(Equipment e) {
         equip = e;
+        listener = new ChangeButtonListener(equip,this);
 
         this.setTitle("Eqipment Window");
-        setPreferredSize(new Dimension(500, 700));
+        setPreferredSize(new Dimension(550, 720));
         this.setResizable(false);
         jdpDesktop = new JDesktopPane();
         setContentPane(jdpDesktop);
         setLayout(new FlowLayout());
         setModal(true);
 
+        drawElements();
 
-        //main weapons
-        JLayeredPane mainPane = new JLayeredPane();
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    public void drawElements(){
+        if(mainPane!= null) {
+            remove(mainPane);
+            remove(backpackPane);
+            remove(InfoClosePanel);
+        }
+        mainPane = new JLayeredPane();
         mainPane.setBorder(BorderFactory.createTitledBorder("Main Weapons"));
-        mainPane.setPreferredSize(new Dimension(480, 140));
+        mainPane.setPreferredSize(new Dimension(520, 150));
         mainPane.setLayout(new FlowLayout());
 
         if (equip.gracz.weapon != null) {
-            ThingPanel mainwWeapon = new ThingPanel(equip.gracz.weapon.name, equip.gracz.weapon.cost, equip.gracz.weapon.showDetails(),this);
+            ThingPanel mainWeapon = new ThingPanel("W.",equip.gracz.weapon.name, equip.gracz.weapon.cost, equip.gracz.weapon.showDetails(),this);
+            mainPane.add(mainWeapon,BorderLayout.NORTH);
+        }
+        else {
+            ThingPanel mainwWeapon = new ThingPanel("W.",this);
             mainPane.add(mainwWeapon,BorderLayout.NORTH);
+        }
+        if (equip.gracz.amulet != null) {
+            ThingPanel mainAmulet = new ThingPanel("A.",equip.gracz.amulet.name, equip.gracz.amulet.cost, equip.gracz.amulet.showDetails(),this);
+            mainPane.add(mainAmulet);
+        }
+        else {
+            ThingPanel mainAmulet = new ThingPanel("A.",this);
+            mainPane.add(mainAmulet);
+        }
+        if (equip.gracz.shield != null) {
+            ThingPanel mainShield = new ThingPanel("S.",equip.gracz.shield.name, equip.gracz.shield.cost, equip.gracz.shield.showDetails(),this);
+            mainPane.add(mainShield);
+        }
+        else {
+            ThingPanel mainShield = new ThingPanel("S.",this);
+            mainPane.add(mainShield);
         }
 
         add(mainPane, BorderLayout.NORTH);
 
         //backpack
-        JLayeredPane backpackPane = new JLayeredPane();
+        backpackPane = new JLayeredPane();
         backpackPane.setBorder(BorderFactory.createTitledBorder("Backpack"));
-        backpackPane.setPreferredSize(new Dimension(480, 370));
+        backpackPane.setPreferredSize(new Dimension(520, 430));
+        backpackPane.setLayout(new FlowLayout());
 
-        JPanel bacpackItemsPanel = new JPanel();
-        bacpackItemsPanel.setLayout(new FlowLayout());
+        for(int i=0;i<equip.things.length;i++){
+            Thing item = equip.things[i];
+            JPanel row = new JPanel();
+            ThingPanel itemPanel;
+            if(item != null){
+                itemPanel = new ThingPanel(Integer.toString(i+1),item.name, item.cost, item.showDetails(),this);
+            }
+            else {
+                itemPanel = new ThingPanel(Integer.toString(i + 1),this);
+            }
+            JButton changeButton = new JButton("Change");
+            changeButton.setActionCommand(Integer.toString(i+1));
+            changeButton.addActionListener(listener);
 
-        backpackPane.add(bacpackItemsPanel);
+            row.add(itemPanel, BorderLayout.WEST);
+            row.add(changeButton, BorderLayout.EAST);
+            backpackPane.add(row);
+        }
         add(backpackPane);
 
         //info&close
-        JPanel InfoClosePanel = new JPanel();
+        InfoClosePanel = new JPanel();
         InfoClosePanel.setPreferredSize(new Dimension(480, 100));
 
         //--> items
@@ -95,9 +148,5 @@ public class EquipmentWindow extends JDialog {
         InfoClosePanel.add(ExtraPanel,BorderLayout.SOUTH);
 
         add(InfoClosePanel, BorderLayout.SOUTH);
-
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 }

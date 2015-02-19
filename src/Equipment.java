@@ -1,8 +1,9 @@
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Equipment {
 
-    private Thing[] things;
+    public Thing[] things;
     public Player gracz;
     public int claw;
     public int ebon;
@@ -28,12 +29,16 @@ public class Equipment {
             gracz.weapon = new Staff(0, 0, gracz.getNames());    //przy konstruktorze dla itemu dal "0" da bazowy predefiniowany startowy zestaw
             gracz.shield = null;
             gracz.amulet = new Amulet(0, 0, gracz.getNames());
+            gracz.amulet.add_to(gracz);
         }
         if(n == 2)
         {
             gracz.weapon = new Weapon(1, 4, gracz.getNames());    //przy konstruktorze dla itemu dal "0" da bazowy predefiniowany startowy zestaw
             gracz.shield = new Shield(1, 4, gracz.getNames());
             gracz.amulet = new Amulet(0, 4, gracz.getNames());
+            gracz.amulet.add_to(gracz);
+            things[0] = new Weapon(1, 4, gracz.getNames());
+            things[5] = new Amulet(1, 4, gracz.getNames());
         }
     }
 
@@ -42,41 +47,12 @@ public class Equipment {
      */
     public void show() {
         EquipmentWindow wind = new EquipmentWindow(this);
-        String info = "";
-        int i;
-
-        System.out.println("EQUIPED ITEMS:");
-        if (gracz.weapon != null) {
-            info = gracz.weapon.show();
-            System.out.println("\t" + info);
-        }
-        info = "";
-        if (gracz.shield != null) {
-            info = gracz.shield.show();
-            System.out.println("\t" + info);
-        }
-        info = "";
-        if (gracz.amulet != null) {
-            info = gracz.amulet.show();
-            System.out.println("\t" + info);
-        }
-
-        System.out.println("BACKPACK ITEMS:");
-        for (i = 0; i < 8; i++) {
-            if (things[i] != null) {
-                info = things[i].show();
-                System.out.println("\t" + (i + 1) + ". " + info);
-            } else
-                System.out.println("\t" + (i + 1) + ". ");
-        }
-        System.out.println("\nClaws:" + claw + " Ebonite:" + ebon + " Dust:" + dust + " Venom:" + venom);
-        System.out.println("Gold: " + gracz.getGOLD());
     }
 
     /**
      * funkcja zakladajaca przedmiot z pozycji
      */
-    public void swap(int num) {
+    public void swap(int num, JDialog source) {
         ThingType type;
         if (things[num] != null)
             type = things[num].id();
@@ -88,6 +64,7 @@ public class Equipment {
             case WEAPON:
                 if (gracz.s_strenght() < things[num].requirements()) {
                     System.out.println("Too low strenght!");
+                    JOptionPane.showMessageDialog(source, "Too low strenght!");
                     break;
                 }
                 tmp = gracz.weapon;
@@ -100,6 +77,7 @@ public class Equipment {
             case SHIELD:
                 if (gracz.s_dexterity() < things[num].requirements()) {
                     System.out.println("Too low dexterity!");
+                    JOptionPane.showMessageDialog(source, "Too low dexterity!");
                     break;
                 }
                 tmp = gracz.shield;
@@ -112,6 +90,7 @@ public class Equipment {
             case AMULET:
                 if (gracz.s_magic_skill() < things[num].requirements()) {
                     System.out.println("Too low magic skill!");
+                    JOptionPane.showMessageDialog(source, "Too low magic skill!");
                     break;
                 }
                 tmp = gracz.amulet;
@@ -124,6 +103,7 @@ public class Equipment {
             case STAFF:
                 if (gracz.s_magic_skill() < things[num].requirements()) {
                     System.out.println("Too low magic skill!");
+                    JOptionPane.showMessageDialog(source, "Too low magic skill!");
                     break;
                 }
                 tmp = gracz.weapon;
@@ -192,24 +172,6 @@ public class Equipment {
                 System.out.println("Wrong number Idjit!");
         }
         System.out.println("Added!");
-    }
-
-    /**
-     * funkcja do zmiany wyekwipowania
-     */
-    public void change() {
-        Scanner sc = new Scanner(System.in);
-        int num = 0;
-
-        show();
-        System.out.println("Type number of item from backpack you want to equip");
-        while (num < 1 || num > 8) {
-            num = sc.nextInt();
-            if (num > 0 && num < 9)
-                swap(num - 1);
-            else
-                System.out.println("Wrong number Idjit!");
-        }
     }
 
     public int getPlayerGold(){

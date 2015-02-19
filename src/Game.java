@@ -221,7 +221,7 @@ public class Game {
     }
 
     public void ShowEquipment(){
-        play.equip.change();
+        play.equip.show();
     }
 
     public void ShowStats(){

@@ -53,7 +53,7 @@ public class Shield extends Thing {
     }
 
     public String showDetails() {
-        return "";
+        return "Defence: " + def_l + "-" + def_u + "\n\nRequires: " + require + " dexterity";
     }
 
     public ThingType id() {
