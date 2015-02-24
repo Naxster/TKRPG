@@ -412,4 +412,6 @@ public abstract class Player implements Character {
     public void help(int n) {
         this.meta_hp += n;
     }
+
+    public Equipment getEquip() {return equip;}
 }

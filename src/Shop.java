@@ -1,17 +1,20 @@
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Shop {
 
-    private Thing[] items;
+    public Thing[] items;
     private int hpotions;
     private int mpotions;
     private Name namez;
+    private Player player;
 
-    public Shop(int lvl, Name names) {
+    public Shop(int lvl, Name names, Player p) {
         namez = names;
         hpotions = 999;
         mpotions = 999;
         items = new Thing[16];
+        player = p;
 
         items[0] = new Weapon(lvl, 4, namez);
         items[1] = new Weapon(lvl, 5, namez);
@@ -31,7 +34,9 @@ public class Shop {
         items[15] = new Staff(lvl + 5, 3, namez);
     }
 
-    public void show() {
+    public void show(Equipment e) {
+        ShopWindow window = new ShopWindow(this,e);
+
         int i, j;
         String info;
         int c;
@@ -45,54 +50,38 @@ public class Shop {
         }
     }
 
-    public void goShopin(Player p) {
-        Scanner sc = new Scanner(System.in);
-        String chos;
-        int ile = 0;
+    public void sellHPPotion(JDialog source){
+        if (player.getGOLD() >= 50) {
+            player.useHPOT(false, 1);
+            player.chgGOLD(-50);
+            System.out.println("Added health potion");
+            JOptionPane.showMessageDialog(source, "Added health potion");
+        } else {
+            System.out.println("Not enought money!");
+            JOptionPane.showMessageDialog(source, "Not enought money!");
+        }
+    }
 
-        p.equip.show();
+    public void sellMPPotion(JDialog source){
+        if (player.getGOLD() >= 50) {
+            player.useMPOT(false, 1);
+            player.chgGOLD(-50);
+            System.out.println("Added mana potion");
+            JOptionPane.showMessageDialog(source, "Added mana potion");
+        } else {
+            System.out.println("Not enought money!");
+            JOptionPane.showMessageDialog(source, "Not enought money!");
+        }
+    }
 
-        System.out.println("\n You want to: (b)uy something, get (h)ealt potions (50g), get (m)agic potions (40g) or (e)xit");
-        chos = sc.nextLine();
-
-        switch (chos) {
-            case "e":
-                return;
-            case "h":
-                System.out.println("How many potions?");
-                ile = sc.nextInt();
-                if (p.getGOLD() >= 50 * ile) {
-                    p.useHPOT(false, ile);
-                    p.chgGOLD(-50 * ile);
-                    System.out.println("Added " + ile + " health potions");
-                } else
-                    System.out.println("Not enought money!");
-                break;
-            case "m":
-                System.out.println("How many potions?");
-                ile = sc.nextInt();
-                if (p.getGOLD() >= 40 * ile) {
-                    p.useHPOT(false, ile);
-                    p.chgGOLD(-40 * ile);
-                    System.out.println("Added " + ile + " mana potions");
-                } else
-                    System.out.println("Not enought money!");
-                break;
-            case "b":
-                System.out.println("Here, choose: \n");
-                this.show();
-                System.out.println("\nWhich number (1-16) do you like?: ");
-                ile = sc.nextInt() - 1;
-
-                if (p.getGOLD() >= items[ile].costing()) {
-                    p.equip.found(items[ile]);
-                    p.chgGOLD(-items[ile].costing());
-                    System.out.println("Added item");
-                } else
-                    System.out.println("Not enought money!");
-                break;
-            default:
-                break;
+    public void sell(int num, JDialog source){
+        if (player.getGOLD() >= items[num].costing()) {
+            player.equip.ItemBought(items[num]);
+            player.chgGOLD(-items[num].costing());
+            System.out.println("Added item");
+        } else {
+            System.out.println("Not enought money!");
+            JOptionPane.showMessageDialog(source, "Not enough money!");
         }
     }
 }

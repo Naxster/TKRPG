@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 
 public class Equipment {
@@ -151,6 +152,7 @@ public class Equipment {
             foundItem(f);
             return;
         }
+
         show();
         System.out.println("Wanna add? (y/n)");
         while (dec != 'y' && dec != 'n') {
@@ -159,6 +161,9 @@ public class Equipment {
             if (dec != 'y' && dec != 'n')
                 System.out.println("Only y/n answer Idjit!");
         }
+        /*int n = JOptionPane.showConfirmDialog(source,"Do you want to reload shop's inventory?\nIt will provide new items","Shop reload",JOptionPane.YES_NO_OPTION);
+        if (n == 1)
+            return;*/
         if (dec == 'n')
             return;
 
@@ -174,7 +179,30 @@ public class Equipment {
         System.out.println("Added!");
     }
 
+    public void ItemBought(Thing f) {
+        int num = 0;
+
+        EquipPositionChangeWindow questionWindow = new EquipPositionChangeWindow();
+        num = questionWindow.selectedSlot;
+        things[num] = f;
+        System.out.println("Added!");
+    }
+
+    public void sell(int num, JDialog source){
+        if (things[num] != null) {
+            gracz.chgGOLD(things[num].cost);
+            things[num] = null;
+            JOptionPane.showMessageDialog(source, "Item Sold!");
+        }
+    }
+
     public int getPlayerGold(){
         return gracz.gold;
+    }
+    public int getPlayerHPot(){
+        return gracz.h_pot;
+    }
+    public int getPlayerMPot(){
+        return gracz.m_pot;
     }
 }

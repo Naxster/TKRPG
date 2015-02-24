@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 public class ThingPanel extends JPanel {
 
     private String details;
-    private EquipmentWindow parentWindow;
+    private JDialog parentWindow;
 
-    public ThingPanel(String num, String name, int cost, String det, EquipmentWindow parent) {
+    public ThingPanel(String num, String name, int cost, String det, JDialog parent) {
         details = det;
         parentWindow = parent;
 
@@ -45,7 +45,7 @@ public class ThingPanel extends JPanel {
         add(costText,BorderLayout.EAST);
     }
 
-    public ThingPanel(String num, EquipmentWindow parent) {
+    public ThingPanel(String num, JDialog parent) {
         parentWindow = parent;
 
         setLayout(new FlowLayout());

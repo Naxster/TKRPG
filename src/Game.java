@@ -9,7 +9,7 @@ public class Game {
     private Quest q2;
     private Quest q3;
     public Name names;
-    public MapWindow map;
+    public MapWindow window;
     WorldGenerator world;
     Player play;
     Shop sklep;
@@ -55,7 +55,7 @@ public class Game {
                 break;
         }
         System.out.println(msg);
-        map.ChangeTerritory(msg);
+        window.ChangeTerritory(msg);
     }
 
     public int movement() throws IOException {
@@ -113,14 +113,14 @@ public class Game {
                 return 0;
             case 5:
                 if (world.map[cord][0] == 0) {
-                    sklep = new Shop(play.getLVL(), names);
-                    sklep.goShopin(play);
+                    sklep = new Shop(play.getLVL(), names, play);
+                    sklep.show(play.getEquip());
                 } else {
                     System.out.println("Do you want to reload shop (y-n), to make it more adjusted?");
-                    String chos = sc.nextLine();
-                    if (chos == "y")
-                        sklep = new Shop(play.getLVL(), names);
-                    sklep.goShopin(play);
+                    int n = JOptionPane.showConfirmDialog(window,"Do you want to reload shop's inventory?\nIt will provide new items","Shop reload",JOptionPane.YES_NO_OPTION);
+                    if (n == 0)
+                        sklep = new Shop(play.getLVL(), names, play);
+                    sklep.show(play.getEquip());
                 }
                 return 0;
             case 6:
@@ -137,9 +137,9 @@ public class Game {
     public static void main(String[] args) throws IOException, InterruptedException {
         Game g = new Game();
         //MainWindow w = new MainWindow();
-        g.map = new MapWindow(g.world.map,g);
+        g.window = new MapWindow(g.world.map,g);
         Object[] options = {"Mage", "Warrior"};
-        int chosenClass = JOptionPane.showOptionDialog(g.map,
+        int chosenClass = JOptionPane.showOptionDialog(g.window,
                 "Choose your class:",
                 "Class Choice",
                 JOptionPane.YES_NO_OPTION,
@@ -181,7 +181,7 @@ public class Game {
         world.map[play.y * 30 + play.x][0] = 1;
         CheckTerritory();
         world.show(play.y * 30 + play.x);
-        map.repaintPlayer(play.x, play.y);
+        window.repaintPlayer(play.x, play.y);
     }
 
     public void MoveUp() throws IOException{

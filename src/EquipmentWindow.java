@@ -48,7 +48,7 @@ public class EquipmentWindow extends JDialog {
         mainPane.setLayout(new FlowLayout());
 
         if (equip.gracz.weapon != null) {
-            ThingPanel mainWeapon = new ThingPanel("W.",equip.gracz.weapon.name, equip.gracz.weapon.cost, equip.gracz.weapon.showDetails(),this);
+            ThingPanel mainWeapon = new ThingPanel("W.",equip.gracz.weapon.name, equip.gracz.weapon.cost, equip.gracz.weapon.showDetails(),(JDialog)this);
             mainPane.add(mainWeapon,BorderLayout.NORTH);
         }
         else {
@@ -123,15 +123,27 @@ public class EquipmentWindow extends JDialog {
         ItemsPanel.add(DustText);
         ItemsPanel.add(VenomText, BorderLayout.EAST);
 
-        InfoClosePanel.add(ItemsPanel,BorderLayout.NORTH);
+        InfoClosePanel.add(ItemsPanel, BorderLayout.NORTH);
 
         //--> extra
         JPanel ExtraPanel = new JPanel();
         ExtraPanel.setLayout(new FlowLayout());
         ExtraPanel.setPreferredSize(new Dimension(480, 70));
 
-        JTextField GoldText = new JTextField("Gold: " + equip.getPlayerGold(), 20);
+        JPanel extra = new JPanel();
+
+        JTextField HPotText = new JTextField("HP Pot: " + equip.getPlayerHPot(), 7);
+        HPotText.setEditable(false);
+
+        JTextField MPotText = new JTextField("MP Pot: " + equip.getPlayerMPot(), 7);
+        MPotText.setEditable(false);
+
+        JTextField GoldText = new JTextField("Gold: " + equip.getPlayerGold(), 12);
         GoldText.setEditable(false);
+
+        extra.add(HPotText,BorderLayout.WEST);
+        extra.add(MPotText);
+        extra.add(GoldText, BorderLayout.EAST);
 
         JButton closeButton = new JButton("Close");
         closeButton.setPreferredSize(new Dimension(120, 40));
@@ -142,8 +154,8 @@ public class EquipmentWindow extends JDialog {
             }
         });
 
-        ExtraPanel.add(GoldText,BorderLayout.WEST);
-        ExtraPanel.add(closeButton,BorderLayout.EAST);
+        ExtraPanel.add(extra, BorderLayout.WEST);
+        ExtraPanel.add(closeButton, BorderLayout.EAST);
 
         InfoClosePanel.add(ExtraPanel,BorderLayout.SOUTH);
 
